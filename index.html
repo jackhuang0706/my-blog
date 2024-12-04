@@ -171,7 +171,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-12-04 19:55:40 / Modified: 19:56:59" itemprop="dateCreated datePublished" datetime="2024-12-04T19:55:40+08:00">2024-12-04</time>
+              <time title="Created: 2024-12-04 19:55:40 / Modified: 20:45:37" itemprop="dateCreated datePublished" datetime="2024-12-04T19:55:40+08:00">2024-12-04</time>
             </span>
 
           
@@ -185,7 +185,43 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>好類類類類累喔</p>
+          <h1 id="反正就順便紀錄一下這個blog的架設過程"><a href="#反正就順便紀錄一下這個blog的架設過程" class="headerlink" title="反正就順便紀錄一下這個blog的架設過程"></a>反正就順便紀錄一下這個blog的架設過程</h1><ul>
+<li>下載<a target="_blank" rel="noopener" href="https://nodejs.org/zh-tw">nodejs</a>及<a target="_blank" rel="noopener" href="https://git-scm.com/">git</a></li>
+<li>打開 windows Powershall</li>
+</ul>
+<h3 id="安裝hexo"><a href="#安裝hexo" class="headerlink" title="安裝hexo"></a>安裝hexo</h3><ul>
+<li>執行 ‘npm install -g hexo-cli’</li>
+<li>用以下程式碼創建新的blog資料夾<ul>
+<li>‘hexo init my-blog’</li>
+<li>‘cd my-blog’</li>
+<li>‘npm install’</li>
+</ul>
+</li>
+<li>啟動伺服器 ‘hexo server’</li>
+<li>可以先到’localhost:4000’看看有沒有網站</li>
+</ul>
+<h3 id="安裝NexT-主題"><a href="#安裝NexT-主題" class="headerlink" title="安裝NexT 主題"></a>安裝NexT 主題</h3><ul>
+<li>一樣的環境</li>
+<li>‘git clone <a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a> themes&#x2F;next’</li>
+<li>可用’ls’ 看my-blog裡面有哪些資料夾和檔案</li>
+<li>進入 ‘&#x2F;_config.yml’ 文件(‘code &#x2F;_config.yml’ 應該會用vscode或其他IDE打開這份文件)</li>
+<li>裡面有一行 ‘theme: landscape’，把landscape改成next，如 ‘theme: next’</li>
+<li>啟動伺服器 ‘hexo server’</li>
+</ul>
+<h3 id="部屬到github"><a href="#部屬到github" class="headerlink" title="部屬到github"></a>部屬到github</h3><ul>
+<li>創建一個Github Repository，我是 取叫 my-blog</li>
+<li>再打開 ‘&#x2F;_config.yml’ 文件，進行以下設定(要改的部分):<ul>
+<li>‘url: https:&#x2F;&#x2F;使用者自己的名稱.github.io&#x2F;my-blog’</li>
+<li>‘deploy:’ 這邊要改:<ul>
+<li>‘type: git’</li>
+<li>‘repo: <a target="_blank" rel="noopener" href="https://github.com/%E4%BD%BF%E7%94%A8%E8%80%85%E8%87%AA%E5%B7%B1%E7%9A%84%E5%90%8D%E7%A8%B1/my-blog.git">https://github.com/使用者自己的名稱/my-blog.git</a>‘</li>
+<li>‘branch: gh-pages’</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><p>‘<a target="_blank" rel="noopener" href="https://github.com/%E4%BD%BF%E7%94%A8%E8%80%85%E8%87%AA%E5%B7%B1%E7%9A%84%E5%90%8D%E7%A8%B1/my-blog.git">https://github.com/使用者自己的名稱/my-blog.git</a>‘</p>
 
       
     </div>
