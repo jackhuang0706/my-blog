@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jackhuang0706.github.io","root":"/my-blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="紀錄一下這個blog的架設過程(終於有自己的blog可以存code和題解了(不用再用HackMD了&#x3D;+&#x3D;))">
+  <meta name="description" content="關於這個blog的一些操作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="First Post">
 <meta property="og:url" content="https://jackhuang0706.github.io/my-blog/2024/12/04/First-post/index.html">
 <meta property="og:site_name" content="Lazy Blog">
-<meta property="og:description" content="紀錄一下這個blog的架設過程(終於有自己的blog可以存code和題解了(不用再用HackMD了&#x3D;+&#x3D;))">
+<meta property="og:description" content="關於這個blog的一些操作">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-04T11:55:40.000Z">
-<meta property="article:modified_time" content="2024-12-08T08:57:57.296Z">
+<meta property="article:modified_time" content="2024-12-14T00:54:41.505Z">
 <meta property="article:author" content="JackHuang">
 <meta property="article:tag" content="learning">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-08 16:57:57" itemprop="dateModified" datetime="2024-12-08T16:57:57+08:00">2024-12-08</time>
+                <time title="Modified: 2024-12-14 08:54:41" itemprop="dateModified" datetime="2024-12-14T08:54:41+08:00">2024-12-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -215,14 +215,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>紀錄一下這個blog的架設過程(終於有自己的blog可以存code和題解了(不用再用HackMD了&#x3D;+&#x3D;))</p>
+        <p>關於這個blog的一些操作</p>
 <span id="more"></span>
 
-<ul>
+<h2 id="網站架構-部署"><a href="#網站架構-部署" class="headerlink" title="網站架構&amp;部署"></a>網站架構&amp;部署</h2><ul>
 <li>下載<a target="_blank" rel="noopener" href="https://nodejs.org/zh-tw"><strong>nodejs</strong></a>及<a target="_blank" rel="noopener" href="https://git-scm.com/"><strong>git</strong></a></li>
 <li>打開 windows Powershall</li>
 </ul>
-<h2 id="安裝hexo"><a href="#安裝hexo" class="headerlink" title="安裝hexo"></a>安裝hexo</h2><ul>
+<h3 id="安裝hexo"><a href="#安裝hexo" class="headerlink" title="安裝hexo"></a>安裝hexo</h3><ul>
 <li>執行 <code>npm install -g hexo-cli</code>(參見備註)</li>
 <li>用以下程式碼創建新的blog資料夾<ul>
 <li><code>hexo init my-blog</code></li>
@@ -233,7 +233,7 @@
 <li>啟動伺服器 <code>hexo server</code></li>
 <li>可以先到<code>localhost:4000</code>看看有沒有網站</li>
 </ul>
-<h2 id="安裝NexT-主題"><a href="#安裝NexT-主題" class="headerlink" title="安裝NexT 主題"></a>安裝NexT 主題</h2><ul>
+<h3 id="安裝NexT-主題"><a href="#安裝NexT-主題" class="headerlink" title="安裝NexT 主題"></a>安裝NexT 主題</h3><ul>
 <li>一樣的環境</li>
 <li><code>git clone https://github.com/theme-next/hexo-theme-next themes/next</code></li>
 <li>可用<code>ls</code> 看my-blog裡面有哪些資料夾和檔案</li>
@@ -241,18 +241,20 @@
 <li>裡面有一行 <code>theme: landscape</code>，把landscape改成next，如 <code>theme: next</code></li>
 <li>啟動伺服器 <code>hexo server</code></li>
 </ul>
-<h2 id="部屬到github"><a href="#部屬到github" class="headerlink" title="部屬到github"></a>部屬到github</h2><ul>
+<h3 id="部署到github"><a href="#部署到github" class="headerlink" title="部署到github"></a>部署到github</h3><ul>
 <li>創建一個Github Repository，我是取叫 my-blog</li>
 <li>再打開 <code>/_config.yml</code> 文件，進行以下設定(要改的部分):<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url: https://使用者自己的名稱.github.io/my-blog</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: https://github.com/使用者自己的名稱/my-blog.git</span><br><span class="line">    branch: gh-pages</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><p><code>https://github.com/使用者自己的名稱/my-blog.git</code></p>
-<h2 id="備註"><a href="#備註" class="headerlink" title="備註"></a>備註</h2><p>如果執行npm命令時出現<br><code>npm : 因為這個系統上已停用指令碼執行，所以無法載入 C:\Program Files\nodejs\npm.ps1 檔案。</code><br>類似這樣的指令時，須以管理員身分先允許程式碼的執行。<br><strong>以下為用管理員身分執行的操作</strong></p>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><p><code>https://github.com/使用者自己的名稱/my-blog.git</code></p>
+<h3 id="備註"><a href="#備註" class="headerlink" title="備註"></a>備註</h3><p>如果執行npm命令時出現<br><code>npm : 因為這個系統上已停用指令碼執行，所以無法載入 C:\Program Files\nodejs\npm.ps1 檔案。</code><br>類似這樣的指令時，須以管理員身分先允許程式碼的執行。<br><strong>以下為用管理員身分執行的操作</strong></p>
 <ul>
 <li><code>Get-ExecutionPolicy</code>，沒意外會是 <code>Restricted</code></li>
 <li><code>Set-ExecutionPolicy RemoteSigned</code> 修改成允許執行程式碼，如果出現提示則輸入 <code>Y</code></li>
 <li>可以重新回到 windows powershall 使用者模式重新試看看囉</li>
 </ul>
+<h2 id="新增post"><a href="#新增post" class="headerlink" title="新增post"></a>新增post</h2><p>輸入 <code>hexo new post 名稱</code>，新的markdown文件就會生成，可以到 <code>\source\_posts</code> 查看，並 <code>code 名稱</code> 去編輯文件，可以將文件設定 tag 和 categories</p>
+<h2 id="刪除post"><a href="#刪除post" class="headerlink" title="刪除post"></a>刪除post</h2><p>進入 <code>\source\_posts</code>，輸入 <code>rm 要刪除的post名稱</code>，操作完也要 <code>hexo clean</code> <code>hexo generate</code> <code>hexo deploy</code></p>
 
     </div>
 
@@ -333,7 +335,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9Dhexo"><span class="nav-number">1.</span> <span class="nav-text">安裝hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9DNexT-%E4%B8%BB%E9%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">安裝NexT 主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%B1%AC%E5%88%B0github"><span class="nav-number">3.</span> <span class="nav-text">部屬到github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-number">4.</span> <span class="nav-text">查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%82%99%E8%A8%BB"><span class="nav-number">5.</span> <span class="nav-text">備註</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B6%B2%E7%AB%99%E6%9E%B6%E6%A7%8B-%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">網站架構&amp;部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9Dhexo"><span class="nav-number">1.1.</span> <span class="nav-text">安裝hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9DNexT-%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">安裝NexT 主題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0github"><span class="nav-number">1.3.</span> <span class="nav-text">部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-number">1.4.</span> <span class="nav-text">查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%99%E8%A8%BB"><span class="nav-number">1.5.</span> <span class="nav-text">備註</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9Epost"><span class="nav-number">2.</span> <span class="nav-text">新增post</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AA%E9%99%A4post"><span class="nav-number">3.</span> <span class="nav-text">刪除post</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -347,20 +349,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/my-blog/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/my-blog/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/my-blog/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
