@@ -28,7 +28,7 @@
 <meta property="og:description" content="Table of content 前綴和（Prefix Sum） 稀疏表（Sparse table） 樹狀數組（Binary Indexed Tree,BIT） 線段樹（Segment Tree） 差分（Difference Array） 懶人標記（Lazy Propagation） 動態開點（Dynamic Segment Tree） 持久化（Persistent Segment Tree） 高">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-03-03T10:28:20.000Z">
-<meta property="article:modified_time" content="2025-03-03T10:38:02.879Z">
+<meta property="article:modified_time" content="2025-03-03T11:42:54.103Z">
 <meta property="article:author" content="Fijjj">
 <meta property="article:tag" content="range-query">
 <meta name="twitter:card" content="summary">
@@ -182,7 +182,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2025-03-03 18:28:20 / Modified: 18:38:02" itemprop="dateCreated datePublished" datetime="2025-03-03T18:28:20+08:00">2025-03-03</time>
+              <time title="Created: 2025-03-03 18:28:20 / Modified: 19:42:54" itemprop="dateCreated datePublished" datetime="2025-03-03T18:28:20+08:00">2025-03-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,7 +218,18 @@
 </ul>
 <span id="more"></span>
 
-<h2 id="前綴和（Prefix-Sum）"><a href="#前綴和（Prefix-Sum）" class="headerlink" title="前綴和（Prefix Sum）"></a>前綴和（Prefix Sum）</h2>
+<h2 id="前綴和（Prefix-Sum）"><a href="#前綴和（Prefix-Sum）" class="headerlink" title="前綴和（Prefix Sum）"></a>前綴和（Prefix Sum）</h2><h3 id="一維前綴和"><a href="#一維前綴和" class="headerlink" title="一維前綴和"></a>一維前綴和</h3><blockquote>
+<p>給一個長度為 $n$ 的整數陣列 $x_1,x_2,x_3,…,x_n$，接下來有 $q$ 筆詢問，每筆詢問包含兩個整數 $a,b$，請問 $x_a+x_{a+1}+x_{a+2}+…+x_{b-1}+x_b$，也就是 $\sum\limits_{k&#x3D;l}^{r}x_k$ 為何？</p>
+<ul>
+<li>$1\le n,q\le 2\times 10^5$</li>
+<li>$1\le a\le b\le n$</li>
+<li>$1\le x_i\le 10^9$</li>
+</ul>
+</blockquote>
+<p>用暴力做是 $O(nq)$ ，顯然會炸掉，因此用前綴和來解。</p>
+<p>定義前綴和陣列 $S[k]&#x3D;\sum\limits_{i&#x3D;1}^k A[i]$，也就是前 $k$ 項加總，透過前綴和 $O(n)$ 預處理後可以 $O(1)$ 算出任意區間的和。</p>
+<h3 id="二維前綴和"><a href="#二維前綴和" class="headerlink" title="二維前綴和"></a>二維前綴和</h3><p>定義前綴和陣列 $S[i][j]$ 為 $(1,1)$ 到 $(i,j)$ 的數字總和，可發現到其實和一維的做法類似，只是需要利用排容原理稍微校正一下，其轉移式為： $S[i][j]&#x3D;S[i][j-1]+S[i-1][j]-S[i-1][j-1]+A[i][j]$。</p>
+<h2 id="稀疏表（Sparse-table）"><a href="#稀疏表（Sparse-table）" class="headerlink" title="稀疏表（Sparse table）"></a>稀疏表（Sparse table）</h2>
     </div>
 
     
@@ -298,7 +309,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Table-of-content"><span class="nav-number">1.</span> <span class="nav-text">Table of content</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%B6%B4%E5%92%8C%EF%BC%88Prefix-Sum%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">前綴和（Prefix Sum）</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Table-of-content"><span class="nav-number">1.</span> <span class="nav-text">Table of content</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%B6%B4%E5%92%8C%EF%BC%88Prefix-Sum%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">前綴和（Prefix Sum）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%B6%AD%E5%89%8D%E7%B6%B4%E5%92%8C"><span class="nav-number"></span> <span class="nav-text">一維前綴和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%B6%AD%E5%89%8D%E7%B6%B4%E5%92%8C"><span class="nav-number"></span> <span class="nav-text">二維前綴和</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%80%E7%96%8F%E8%A1%A8%EF%BC%88Sparse-table%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">稀疏表（Sparse table）</span></a></div>
       </div>
       <!--/noindex-->
 
