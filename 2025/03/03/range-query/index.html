@@ -28,7 +28,7 @@
 <meta property="og:description" content="一些對於區間更新與詢問時常用的資料結構與技巧">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-03-03T10:28:20.000Z">
-<meta property="article:modified_time" content="2025-03-09T01:03:06.067Z">
+<meta property="article:modified_time" content="2025-03-09T01:09:05.100Z">
 <meta property="article:author" content="Fijjj">
 <meta property="article:tag" content="range-query">
 <meta name="twitter:card" content="summary">
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-03-09 09:03:06" itemprop="dateModified" datetime="2025-03-09T09:03:06+08:00">2025-03-09</time>
+                <time title="Modified: 2025-03-09 09:09:05" itemprop="dateModified" datetime="2025-03-09T09:09:05+08:00">2025-03-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,13 +221,13 @@
 <h6 id="求區間和："><a href="#求區間和：" class="headerlink" title="求區間和："></a>求區間和：</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">cout &lt;&lt; pre[b]-pre[a<span class="number">-1</span>] &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
 
 <h4 id="二維前綴和"><a href="#二維前綴和" class="headerlink" title="二維前綴和"></a>二維前綴和</h4><p>定義前綴和陣列 $pre[i][j]$ 為 $(1,1)$ 到 $(i,j)$ 的數字總和，其轉移式為： $pre[i][j]&#x3D;pre[i][j-1]+pre[i-1][j]-pre[i-1][j-1]+A[i][j]$。</p>
-<h2 id="差分（Difference-Array）"><a href="#差分（Difference-Array）" class="headerlink" title="差分（Difference Array）"></a>差分（Difference Array）</h2><p>前綴和的反運算，定義：<br>$$<br>\begin{cases}<br>D[i] &#x3D; A[i]-A[i-1] \quad \forall i\ge 2\<br>D[1] &#x3D; A[1] \quad i&#x3D;1<br>\end{cases}<br>$$</p>
+<h2 id="差分（Difference-Array）"><a href="#差分（Difference-Array）" class="headerlink" title="差分（Difference Array）"></a>差分（Difference Array）</h2><p>前綴和的反運算，定義為：<br>$$<br>\begin{cases}<br>D[i] &#x3D; A[i]-A[i-1] \quad \forall i\ge 2 \<br>D[1] &#x3D; A[1] \quad i&#x3D;1<br>\end{cases}<br>$$</p>
 <h2 id="稀疏表（Sparse-table）"><a href="#稀疏表（Sparse-table）" class="headerlink" title="稀疏表（Sparse table）"></a>稀疏表（Sparse table）</h2><p>使用時機：不帶更改求區間最大最小值</p>
 <h4 id="定義（以最大值來寫）"><a href="#定義（以最大值來寫）" class="headerlink" title="定義（以最大值來寫）"></a>定義（以最大值來寫）</h4><p>令 $s[i][j]$ 為 $[i,i+2^j-1]$ 這個區間的最大值，由於每個區間長度必為 $2$ 的冪次，因此轉移式可寫成 $s[i][j]&#x3D;max(s[i][j-1],s[i+2^{j-1}][j-1])$，跟前綴和一樣先預處理，區間詢問時再算，其中預處理為 $O(n\log n)$，每次詢問則是 $O(1)$，總複雜度為 $O(n\log n +q)$。</p>
 <h4 id="預處理"><a href="#預處理" class="headerlink" title="預處理"></a>預處理</h4><p>以下定義 $\text{maxlen}&#x3D;\lfloor \log_{2} n\rfloor$</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    cin &gt;&gt; s[i][<span class="number">0</span>]; <span class="comment">// 長度為1的區間最大值必為它本身</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=maxlen;i++)&#123; <span class="comment">// 從長度小的開始做</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n-(<span class="number">1</span>&lt;&lt;i)<span class="number">+1</span>;j++)&#123;</span><br><span class="line">        s[j][i]=<span class="built_in">max</span>(s[j][i<span class="number">-1</span>],s[j+(<span class="number">1</span>&lt;&lt;(i<span class="number">-1</span>))][i<span class="number">-1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="區間詢問"><a href="#區間詢問" class="headerlink" title="區間詢問"></a>區間詢問</h4><p>假設詢問的區間為 $[a,b]$，將其長度令為 $\text{len}$ ，可以用兩個長度為 $\text{len}-1$ 的區間來比較最大值，這兩個區間可能會有重疊的部分，但不影響答案，只要確保左邊的區間涵蓋範圍的最小值是 $a$，且右邊的區間涵蓋範圍最大值是 $b$ 就好了。</p>
+<h4 id="區間詢問"><a href="#區間詢問" class="headerlink" title="區間詢問"></a>區間詢問</h4><p>假設詢問的區間為 $[a,b]$，將其長度令為 $\text{len}$ ，可以用兩個長度為 $\text{len}-1$ 的區間來比較最大值，這兩個區間可能會有重疊的部分，但不影響答案，只要確保兩個區間取聯集後的範圍是詢問的範圍就好了。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> len=__lg(b-a<span class="number">+1</span>); <span class="comment">// 區間長度</span></span><br><span class="line"><span class="type">int</span> ans=<span class="built_in">max</span>(s[a][len],s[b-(<span class="number">1</span>&lt;&lt;len)<span class="number">+1</span>][len]);</span><br><span class="line">cout &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
 
 <h2 id="樹狀數組（Binary-Indexed-Tree-BIT）"><a href="#樹狀數組（Binary-Indexed-Tree-BIT）" class="headerlink" title="樹狀數組（Binary Indexed Tree,BIT）"></a>樹狀數組（Binary Indexed Tree,BIT）</h2><p>To be continued…</p>
