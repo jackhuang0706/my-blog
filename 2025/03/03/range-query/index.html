@@ -28,7 +28,7 @@
 <meta property="og:description" content="一些對於區間更新與詢問時常用的資料結構與技巧">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-03-03T10:28:20.000Z">
-<meta property="article:modified_time" content="2025-03-09T02:58:20.774Z">
+<meta property="article:modified_time" content="2025-03-09T03:02:46.825Z">
 <meta property="article:author" content="Fijjj">
 <meta property="article:tag" content="range-query">
 <meta name="twitter:card" content="summary">
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-03-09 10:58:20" itemprop="dateModified" datetime="2025-03-09T10:58:20+08:00">2025-03-09</time>
+                <time title="Modified: 2025-03-09 11:02:46" itemprop="dateModified" datetime="2025-03-09T11:02:46+08:00">2025-03-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,8 +220,8 @@
 
 <h6 id="求區間和："><a href="#求區間和：" class="headerlink" title="求區間和："></a>求區間和：</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">cout &lt;&lt; pre[b]-pre[a<span class="number">-1</span>] &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
 
-<h4 id="二維前綴和"><a href="#二維前綴和" class="headerlink" title="二維前綴和"></a>二維前綴和</h4><p>定義前綴和陣列 $pre[i][j]$ 為 $(1,1)$ 到 $(i,j)$ 的數字總和，其轉移式為： $pre[i][j]&#x3D;pre[i][j-1]+pre[i-1][j]-pre[i-1][j-1]+A[i][j]$。</p>
-<h2 id="差分（Difference-Array）"><a href="#差分（Difference-Array）" class="headerlink" title="差分（Difference Array）"></a>差分（Difference Array）</h2><p>前綴和的反運算，定義為：<br>$$<br>\begin{cases}<br>D[i] &#x3D; A[i]-A[i-1] \quad \forall i\ge 2 \<br>D[1] &#x3D; A[1] \quad i&#x3D;1<br>\end{cases}<br>$$</p>
+<h4 id="二維前綴和"><a href="#二維前綴和" class="headerlink" title="二維前綴和"></a>二維前綴和</h4><p>定義前綴和陣列 $pre[i][j]$ 為 $(1,1)$ 到 $(i,j)$ 的數字總和，其轉移式為：<br>$$pre[i][j]&#x3D;pre[i][j-1]+pre[i-1][j]-pre[i-1][j-1]+A[i][j]$$。</p>
+<h2 id="差分（Difference-Array）"><a href="#差分（Difference-Array）" class="headerlink" title="差分（Difference Array）"></a>差分（Difference Array）</h2><p>前綴和的反運算，定義為：<br>$$<br>\begin{cases}<br>D[i] &#x3D; A[i]-A[i-1] \quad \forall i\ge 2 \newline<br>D[1] &#x3D; A[1] \quad i&#x3D;1<br>\end{cases}<br>$$</p>
 <h2 id="稀疏表（Sparse-table）"><a href="#稀疏表（Sparse-table）" class="headerlink" title="稀疏表（Sparse table）"></a>稀疏表（Sparse table）</h2><p>使用時機：不帶更改求區間最大最小值</p>
 <h4 id="定義（以最大值來寫）"><a href="#定義（以最大值來寫）" class="headerlink" title="定義（以最大值來寫）"></a>定義（以最大值來寫）</h4><p>令 $s[i][j]$ 為 $[i,i+2^j-1]$ 這個區間的最大值，由於每個區間長度必為 $2$ 的冪次，因此轉移式可寫成 $s[i][j]&#x3D;max(s[i][j-1],s[i+2^{j-1}][j-1])$，跟前綴和一樣先預處理，區間詢問時再算，其中預處理為 $O(n\log n)$，每次詢問則是 $O(1)$，總複雜度為 $O(n\log n +q)$。</p>
 <h4 id="預處理"><a href="#預處理" class="headerlink" title="預處理"></a>預處理</h4><p>以下定義 $\text{maxlen}&#x3D;\lfloor \log_{2} n\rfloor$</p>
