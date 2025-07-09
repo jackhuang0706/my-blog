@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/my-blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/my-blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/my-blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/my-blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/my-blog/css/main.css">
+
+
+<link rel="stylesheet" href="/my-blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jackhuang0706.github.io","root":"/my-blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一些對於區間更新與詢問時常用的資料結構與技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Range Query">
+<meta property="og:url" content="https://jackhuang0706.github.io/my-blog/2025/03/03/range-query/index.html">
+<meta property="og:site_name" content="Lazy Blog">
+<meta property="og:description" content="一些對於區間更新與詢問時常用的資料結構與技巧">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-03T10:28:20.000Z">
+<meta property="article:modified_time" content="2025-03-09T03:21:35.434Z">
+<meta property="article:author" content="Fijjj">
+<meta property="article:tag" content="range-query">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jackhuang0706.github.io/my-blog/2025/03/03/range-query/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Range Query | Lazy Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/my-blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lazy Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Fijjj偷懶日記</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/my-blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/my-blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/my-blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/my-blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackhuang0706.github.io/my-blog/2025/03/03/range-query/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/my-blog/images/avatar.gif">
+      <meta itemprop="name" content="Fijjj">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lazy Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Range Query
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-03-03 18:28:20" itemprop="dateCreated datePublished" datetime="2025-03-03T18:28:20+08:00">2025-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-09 11:21:35" itemprop="dateModified" datetime="2025-03-09T11:21:35+08:00">2025-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/my-blog/categories/%E7%AB%B6%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">競程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一些對於區間更新與詢問時常用的資料結構與技巧</p>
+<span id="more"></span>
+
+<h2 id="前綴和（Prefix-Sum）"><a href="#前綴和（Prefix-Sum）" class="headerlink" title="前綴和（Prefix Sum）"></a>前綴和（Prefix Sum）</h2><p>使用時機：不帶更改求區間和</p>
+<h4 id="一維前綴和"><a href="#一維前綴和" class="headerlink" title="一維前綴和"></a>一維前綴和</h4><p>定義前綴和陣列 $pre[k]&#x3D;\sum\limits_{i&#x3D;1}^k A[i]$，也就是前 $k$ 項加總，透過前綴和 $O(n)$ 預處理後可以 $O(1)$ 算出任意區間的和，總複雜度為 $O(n+q)$。</p>
+<h6 id="預處理："><a href="#預處理：" class="headerlink" title="預處理："></a>預處理：</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">pre</span><span class="params">(n<span class="number">+1</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    cin &gt;&gt; pre[i];</span><br><span class="line">    pre[i]+=pre[i<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="求區間和："><a href="#求區間和：" class="headerlink" title="求區間和："></a>求區間和：</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">cout &lt;&lt; pre[b]-pre[a<span class="number">-1</span>] &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="二維前綴和"><a href="#二維前綴和" class="headerlink" title="二維前綴和"></a>二維前綴和</h4><p>定義前綴和陣列 $pre[i][j]$ 為 $(1,1)$ 到 $(i,j)$ 的數字總和，其轉移式為：<br>$$pre[i][j]&#x3D;pre[i][j-1]+pre[i-1][j]-pre[i-1][j-1]+A[i][j]$$。</p>
+<h2 id="差分（Difference-Array）"><a href="#差分（Difference-Array）" class="headerlink" title="差分（Difference Array）"></a>差分（Difference Array）</h2><p>前綴和的反運算，定義為：<br>$$<br>\begin{cases}<br>D[i] &#x3D; A[i]-A[i-1] \quad \forall i\ge 2 \newline<br>D[1] &#x3D; A[1] \quad i&#x3D;1<br>\end{cases}<br>$$</p>
+<h2 id="稀疏表（Sparse-table）"><a href="#稀疏表（Sparse-table）" class="headerlink" title="稀疏表（Sparse table）"></a>稀疏表（Sparse table）</h2><p>使用時機：不帶更改求區間最大最小值</p>
+<h4 id="定義（以最大值來寫）"><a href="#定義（以最大值來寫）" class="headerlink" title="定義（以最大值來寫）"></a>定義（以最大值來寫）</h4><p>令 $s[i][j]$ 為 $[i,i+2^j-1]$ 這個區間的最大值，由於每個區間長度必為 $2$ 的冪次，因此轉移式可寫成 $s[i][j]&#x3D;max(s[i][j-1],s[i+2^{j-1}][j-1])$，跟前綴和一樣先預處理，區間詢問時再算，其中預處理為 $O(n\log n)$，每次詢問則是 $O(1)$，總複雜度為 $O(n\log n +q)$。</p>
+<h4 id="預處理"><a href="#預處理" class="headerlink" title="預處理"></a>預處理</h4><p>以下定義 $\text{maxlen}&#x3D;\lfloor \log_{2} n\rfloor$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    cin &gt;&gt; s[i][<span class="number">0</span>]; <span class="comment">// 長度為1的區間最大值必為它本身</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=maxlen;i++)&#123; <span class="comment">// 從長度小的開始做</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n-(<span class="number">1</span>&lt;&lt;i)<span class="number">+1</span>;j++)&#123;</span><br><span class="line">        s[j][i]=<span class="built_in">max</span>(s[j][i<span class="number">-1</span>],s[j+(<span class="number">1</span>&lt;&lt;(i<span class="number">-1</span>))][i<span class="number">-1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="區間詢問"><a href="#區間詢問" class="headerlink" title="區間詢問"></a>區間詢問</h4><p>假設詢問的區間為 $[a,b]$，將其長度令為 $\text{len}$ ，可以用兩個長度為 $\text{len}-1$ 的區間來比較最大值，這兩個區間可能會有重疊的部分，但不影響答案，只要確保兩個區間取聯集後的範圍是詢問的範圍就好了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> len=__lg(b-a<span class="number">+1</span>); <span class="comment">// 區間長度</span></span><br><span class="line"><span class="type">int</span> ans=<span class="built_in">max</span>(s[a][len],s[b-(<span class="number">1</span>&lt;&lt;len)<span class="number">+1</span>][len]);</span><br><span class="line">cout &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="樹狀數組（Binary-Indexed-Tree-BIT）"><a href="#樹狀數組（Binary-Indexed-Tree-BIT）" class="headerlink" title="樹狀數組（Binary Indexed Tree,BIT）"></a>樹狀數組（Binary Indexed Tree,BIT）</h2><p>使用時機：帶修改的前綴和或區間和</p>
+<h4 id="定義"><a href="#定義" class="headerlink" title="定義"></a>定義</h4><p>定義 $\text{lowbit}(x)$ 為 $x$ 寫成二進位制後把除了最右邊之外所有的 $1$ 都換成 $0$ 之後所求得的值。而樹狀數組是一個以一維陣列（先把它叫做 $B$ ）代表的樹，其中 $B[i]$ 代表的意義是一個以 $i$ 為尾巴、長度為 $\text{lowbit}(i)$ 的區間和（也就是 $[i-\text{lowbit}(i)+1,i]$ 這個區間），在build樹狀數組的時候複雜度為 $O(n\log n)$，而單點修改和前綴和查詢則是 $O(\log n)$，詳見實作。</p>
+<h4 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h4><p>在實作上，取 $\text{lowbit}(x)$ 的方法是 <code>x&amp;-x</code>，因為 <code>-x</code> 的定義是將 $x$ 所有位元反過來之後再 $+1$，可想而知只會保留住最小位元的 $1$，其他一定是 $0$。而在build的過程，可以說是從 $1$ 到 $n$ 一個個修改值，因此每一個修改用掉 $O(\log n)$，$n$ 個就變成 $O(n\log n)$。</p>
+<h2 id="線段樹（Segment-Tree）"><a href="#線段樹（Segment-Tree）" class="headerlink" title="線段樹（Segment Tree）"></a>線段樹（Segment Tree）</h2><p>To be continued…</p>
+<h2 id="懶人標記（Lazy-Propagation）"><a href="#懶人標記（Lazy-Propagation）" class="headerlink" title="懶人標記（Lazy Propagation）"></a>懶人標記（Lazy Propagation）</h2><p>To be continued…</p>
+<h2 id="動態開點（Dynamic-Segment-Tree）"><a href="#動態開點（Dynamic-Segment-Tree）" class="headerlink" title="動態開點（Dynamic Segment Tree）"></a>動態開點（Dynamic Segment Tree）</h2><p>To be continued…</p>
+<h2 id="持久化（Persistent-Segment-Tree）"><a href="#持久化（Persistent-Segment-Tree）" class="headerlink" title="持久化（Persistent Segment Tree）"></a>持久化（Persistent Segment Tree）</h2><p>To be continued…</p>
+<h2 id="高維線段樹"><a href="#高維線段樹" class="headerlink" title="高維線段樹"></a>高維線段樹</h2><p>To be continued…</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/my-blog/tags/range-query/" rel="tag"># range-query</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/my-blog/2024/12/27/CMS-onlinejudge/" rel="prev" title="CMS Online Judge架設">
+      <i class="fa fa-chevron-left"></i> CMS Online Judge架設
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/my-blog/2025/03/09/CSES-sol/" rel="next" title="CSES題解區">
+      CSES題解區 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%B6%B4%E5%92%8C%EF%BC%88Prefix-Sum%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">前綴和（Prefix Sum）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E7%B6%AD%E5%89%8D%E7%B6%B4%E5%92%8C"><span class="nav-number">1.0.1.</span> <span class="nav-text">一維前綴和</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A0%90%E8%99%95%E7%90%86%EF%BC%9A"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">預處理：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B1%82%E5%8D%80%E9%96%93%E5%92%8C%EF%BC%9A"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">求區間和：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%B6%AD%E5%89%8D%E7%B6%B4%E5%92%8C"><span class="nav-number">1.0.2.</span> <span class="nav-text">二維前綴和</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%AE%E5%88%86%EF%BC%88Difference-Array%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">差分（Difference Array）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%80%E7%96%8F%E8%A1%A8%EF%BC%88Sparse-table%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">稀疏表（Sparse table）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9%EF%BC%88%E4%BB%A5%E6%9C%80%E5%A4%A7%E5%80%BC%E4%BE%86%E5%AF%AB%EF%BC%89"><span class="nav-number">3.0.1.</span> <span class="nav-text">定義（以最大值來寫）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A0%90%E8%99%95%E7%90%86"><span class="nav-number">3.0.2.</span> <span class="nav-text">預處理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%80%E9%96%93%E8%A9%A2%E5%95%8F"><span class="nav-number">3.0.3.</span> <span class="nav-text">區間詢問</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%B9%E7%8B%80%E6%95%B8%E7%B5%84%EF%BC%88Binary-Indexed-Tree-BIT%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">樹狀數組（Binary Indexed Tree,BIT）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9"><span class="nav-number">4.0.1.</span> <span class="nav-text">定義</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%A6%E4%BD%9C"><span class="nav-number">4.0.2.</span> <span class="nav-text">實作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B7%9A%E6%AE%B5%E6%A8%B9%EF%BC%88Segment-Tree%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">線段樹（Segment Tree）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%B6%E4%BA%BA%E6%A8%99%E8%A8%98%EF%BC%88Lazy-Propagation%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">懶人標記（Lazy Propagation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8B%95%E6%85%8B%E9%96%8B%E9%BB%9E%EF%BC%88Dynamic-Segment-Tree%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">動態開點（Dynamic Segment Tree）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%EF%BC%88Persistent-Segment-Tree%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">持久化（Persistent Segment Tree）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%B6%AD%E7%B7%9A%E6%AE%B5%E6%A8%B9"><span class="nav-number">9.</span> <span class="nav-text">高維線段樹</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Fijjj</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/my-blog/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/my-blog/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/my-blog/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jackhuang0706" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jackhuang0706" rel="noopener" target="_blank"><i class=" fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" title="E-Mail → https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;dQw4w9WgXcQ" rel="noopener" target="_blank"><i class=" fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" title="FB Page → https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;dQw4w9WgXcQ" rel="noopener" target="_blank"><i class=" fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;dQw4w9WgXcQ" rel="noopener" target="_blank"><i class=" fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" title="Instagram → https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;dQw4w9WgXcQ" rel="noopener" target="_blank"><i class=" fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jackhuang0706.github.io/my-blog/" title="MyWeb → https:&#x2F;&#x2F;jackhuang0706.github.io&#x2F;my-blog&#x2F;"><i class=" fa-fw"></i>MyWeb</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-code"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fijjj</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/my-blog/lib/anime.min.js"></script>
+  <script src="/my-blog/lib/velocity/velocity.min.js"></script>
+  <script src="/my-blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/my-blog/js/utils.js"></script>
+
+<script src="/my-blog/js/motion.js"></script>
+
+
+<script src="/my-blog/js/schemes/pisces.js"></script>
+
+
+<script src="/my-blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
